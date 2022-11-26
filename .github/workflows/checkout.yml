@@ -11,4 +11,10 @@ jobs:
         with:
           to: 5420207881
           token: 5485563453:AAEfsRmWYe0OChXgifnzUicAVjYNqOghuN4
-          message: test!!!
+          message: |
+            ${{ github.actor }} created commit:
+            Commit message: ${{ github.event.commits[0].message }}
+            
+            Repository: ${{ github.repository }}
+            
+            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
