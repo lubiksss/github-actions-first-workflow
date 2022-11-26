@@ -11,4 +11,5 @@ jobs:
           path: repo
       - run: ls -al
       - run: cat repo/.github/workflows/checkout.yml
+      - run: cd repo
       - run: git log --pretty=oneline
