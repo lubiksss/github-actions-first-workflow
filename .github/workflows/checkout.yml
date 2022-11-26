@@ -1,12 +1,15 @@
 name: Our Workflow
-on: push
+on:
+  push:
+    tags:
+      - v*
 jobs:
   checkout:
     runs-on: ubuntu-latest
     steps:
-      - run: ls -al
       - uses: actions/checkout@v3
+      - run: echo ${{ github.sha }} > Release.txt
+      - run: cat Release.txt
+      - uses: softprops/action-gh-release@v1
         with:
-          repository: actions/checkout
-          ref: v3
-      - run: ls -al
+          files: "Release.*"
