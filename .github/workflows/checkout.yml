@@ -23,8 +23,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: result
-      - run: cat fail.txt >> $GITHUB_OUTPUT
-      - if: ${{ steps.download.outputs.STATUS == 'fail' }}
+      - id: result
+        run: cat fail.txt >> $GITHUB_OUTPUT
+      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
         run: echo "fail"
 
 #      - name: Build Success Message
