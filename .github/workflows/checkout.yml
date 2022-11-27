@@ -10,16 +10,20 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - id: upload
-        run: echo "STATUS=fail" >> $GITHUB_OUTPUT
-      - run: echo ${{ steps.upload.outputs.STATUS }}
+      - run: echo fail > fail.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: fail.txt
 
   download:
     needs: upload
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: echo ${{ steps.upload.outputs.STATUS }}
+      - uses: actions/download-artifact@v3
+        with:
+          name: result
+      - run: cat fail.txt
 
 #      - name: Build Success Message
 #        uses: appleboy/telegram-action@master
