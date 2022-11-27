@@ -1,0 +1,19 @@
+{
+  "name": "github-actions-first-workflow",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lubiksss/github-actions-first-workflow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lubiksss/github-actions-first-workflow/issues"
+  },
+  "homepage": "https://github.com/lubiksss/github-actions-first-workflow#readme"
+}

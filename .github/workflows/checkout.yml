@@ -1,20 +1,41 @@
-name: telegram message
-on: [push]
+name: Our Workflow
+on:
+  push:
+    tags:
+      - v*.*.*
 jobs:
-
-  build:
-    name: Build
+  checkout:
     runs-on: ubuntu-latest
     steps:
-      - name: send telegram message on push
-        uses: appleboy/telegram-action@master
+      - uses: actions/checkout@v3
+      - run: echo ${{ github.sha }} > Release.txt
+      - run: cat Release.txt
+      - uses: softprops/action-gh-release@v1
         with:
-          to: ${{secrets.TELEGRAM_TO}}
-          token: ${{secrets.TELEGRAM_TOKEN}}
-          message: |
-            ${{ github.actor }} created commit:
-            Commit message: ${{ github.event.commits[0].message }}
-            
-            Repository: ${{ github.repository }}
-            
-            See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+          files: "Release.*"
+
+#      - name: Build Success Message
+#        uses: appleboy/telegram-action@master
+#        if: success()
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          format: markdown
+#          message: |
+#            Author: ${{github.actor}}
+#            Status: 😚 **Success**
+#            Commit message: ${{ github.event.commits[0].message }}
+#            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+#
+#      - name: Build Failure
+#        uses: appleboy/telegram-action@master
+#        if: failure()
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+#          token: ${{ secrets.TELEGRAM_TOKEN }}
+#          format: markdown
+#          message: |
+#            Author: ${{github.actor}}
+#            Status: 😱 **Failure**
+#            Commit message: ${{ github.event.commits[0].message }}
+#            [link](https://github.com/${{ github.repository }}/actions)
