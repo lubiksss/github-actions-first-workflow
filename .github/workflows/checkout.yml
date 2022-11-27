@@ -8,11 +8,10 @@ jobs:
   win-build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: node index.js
+      - run: exit 0
 
   win-noti-success:
-    if: ${{ always() && contains(needs.win-build.outputs.result, 'success') }}
+    if: ${{ always() && contains(needs.win-build.result, 'success') }}
     needs: win-build
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +38,7 @@ jobs:
             [link](https://github.com/${{ github.repository }}/actions)
 
   win-noti-fail:
-    if: ${{ always() && contains(needs.win-build.outputs.result, 'fail') }}
+    if: ${{ always() && contains(needs.win-build.result, 'fail') }}
     needs: win-build
     runs-on: ubuntu-latest
     steps:
