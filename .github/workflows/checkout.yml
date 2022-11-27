@@ -5,16 +5,19 @@ on:
       - 'v*.*.*'
       - '!v*.*.*-*'
 jobs:
-  checkout:
+  upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-#      - run: echo ${{ github.sha    }} > Release.txt
-#      - run: cat Release.txt
-#      - uses: softprops/action-gh-release@v1
-#        with:
-#          files: "Release.*"
+      - run: echo "STATUS=fail" >> $GITHUB_OUTPUT
+      - run: echo ${{ steps.upload.outputs.STATUS }}
+
+  download:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: echo ${{ steps.upload.outputs.STATUS }}
 
 #      - name: Build Success Message
 #        uses: appleboy/telegram-action@master
