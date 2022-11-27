@@ -10,31 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-#      - run: echo "STATUS=fail" > status.txt
-      - run: echo STATUS=success > status.txt
-      - run: echo STATUS=success
-      - uses: actions/upload-artifact@v3
-        with:
-          name: result_win
-          path: status.txt
-      - if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: result_win
-          path: status.txt
 
-  win-noti:
+  win-noti-success:
+    if: ${{ always() && contains(needs.win-build.outputs.result, 'success') }}
     needs: win-build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: result_win
-      - id: result-win
-        run: cat status.txt > $GITHUB_OUTPUT
-      - run: echo ${{ steps.result-win.outputs.STATUS }}
-      - if: ${{ steps.result-win.outputs.STATUS == 'success' }}
-        name: Build Success
+      - name: Build Success
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -45,8 +27,7 @@ jobs:
             Platform: Windows
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
 
-      - if: ${{ steps.result-win.outputs.STATUS != 'success' }}
-        name: Build Failure
+      - name: Build Failure
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
@@ -56,48 +37,13 @@ jobs:
             Status: 😱 **Failure**
             Platform: Windows
             [link](https://github.com/${{ github.repository }}/actions)
-  mac-build:
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: node index.js
-      - run: echo 'STATUS=success' > status.txt
-      - run: echo 'STATUS=success'
-      - uses: actions/upload-artifact@v3
-        with:
-          name: result_mac
-          path: status.txt
-      - if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: result_mac
-          path: status.txt
 
-  mac-noti:
-    needs: mac-build
+  win-noti-fail:
+    if: ${{ always() && contains(needs.win-build.outputs.result, 'fail') }}
+    needs: win-build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: result_mac
-      - id: result-mac
-        run: cat status.txt > $GITHUB_OUTPUT
-      - run: echo ${{ steps.result-mac.outputs.STATUS }}
-
-      - if: ${{ steps.result-mac.outputs.STATUS == 'success' }}
-        name: Build Success
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Author: ${{github.actor}}
-            Status: 😚 **Success**
-            Platform: Windows
-            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
-
-      - if: ${{ steps.result-mac.outputs.STATUS != 'success' }}
-        name: Build Failure
+      - name: Build Failure
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
