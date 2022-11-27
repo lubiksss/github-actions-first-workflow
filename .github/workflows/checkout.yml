@@ -29,7 +29,6 @@ jobs:
       - if: ${{ steps.result.outputs.STATUS == 'success' }}
       - name: Build Success Message
         uses: appleboy/telegram-action@master
-        if: success()
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
@@ -43,7 +42,6 @@ jobs:
       - if: ${{ steps.result.outputs.STATUS == 'fail' }}
       - name: Build Failure
         uses: appleboy/telegram-action@master
-        if: failure()
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
