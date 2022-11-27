@@ -31,7 +31,7 @@ jobs:
         with:
           name: result_win
       - id: result
-        run: cat status.txt >> $GITHUB_OUTPUT
+        run: cat status.txt > $GITHUB_OUTPUT
       - run: echo ${{ steps.result.outputs.STATUS }}
       - if: ${{ steps.result.outputs.STATUS == 'success' }}
         name: Build Success
@@ -61,7 +61,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - run: echo "STATUS=success" > status.txt
+      - run: echo 'STATUS=success' > status.txt
       - run: echo 'STATUS=success'
       - uses: actions/upload-artifact@v3
         with:
@@ -81,7 +81,7 @@ jobs:
         with:
           name: result_mac
       - id: result
-        run: cat status.txt >> $GITHUB_OUTPUT
+        run: cat status.txt > $GITHUB_OUTPUT
       - run: echo ${{ steps.result.outputs.STATUS }}
 
       - if: ${{ steps.result.outputs.STATUS == 'success' }}
