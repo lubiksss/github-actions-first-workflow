@@ -34,7 +34,7 @@ jobs:
         run: cat status.txt > $GITHUB_OUTPUT
       - run: echo ${{ steps.result.outputs.STATUS }}
 #      - if: ${{ steps.result.outputs.STATUS == 'success' }}
-      - if: ${{ "success" == 'success' }}
+      - if: ${{ 'success' == 'success' }}
         name: Build Success
         uses: appleboy/telegram-action@master
         with:
