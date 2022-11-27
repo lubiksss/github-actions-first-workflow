@@ -8,11 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo ${{ github.sha    }} > Release.txt
-      - run: cat Release.txt
-      - uses: softprops/action-gh-release@v1
-        with:
-          files: "Release.*"
+      - run: node index.js
+#      - run: echo ${{ github.sha    }} > Release.txt
+#      - run: cat Release.txt
+#      - uses: softprops/action-gh-release@v1
+#        with:
+#          files: "Release.*"
 
 #      - name: Build Success Message
 #        uses: appleboy/telegram-action@master
