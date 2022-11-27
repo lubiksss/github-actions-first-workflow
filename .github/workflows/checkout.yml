@@ -2,7 +2,8 @@ name: Our Workflow
 on:
   push:
     tags:
-      - 'v*.*.*$'
+      - 'v*.*.*'
+      - '!v*.*.*-*'
 jobs:
   checkout:
     runs-on: ubuntu-latest
