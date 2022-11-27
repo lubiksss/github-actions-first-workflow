@@ -8,10 +8,10 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
-      - id: upload
       - uses: actions/checkout@v3
       - run: node index.js
-      - run: echo "STATUS=fail" >> $GITHUB_OUTPUT
+      - id: upload
+        run: echo "STATUS=fail" >> $GITHUB_OUTPUT
       - run: echo ${{ steps.upload.outputs.STATUS }}
 
   download:
