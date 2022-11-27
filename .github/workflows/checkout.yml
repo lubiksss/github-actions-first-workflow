@@ -5,9 +5,110 @@ on:
       - 'v*.*.*'
       - '!v*.*.*-*'
 jobs:
-  upload:
-    runs-on: ubuntu-latest
+  win-build:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
       - run: node index.js
-      - run: echo ${{github.ref_name}}
+#      - run: echo "STATUS=fail" > status.txt
+      - run: echo "STATUS=success" > status.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: status.txt
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: status.txt
+
+  win-noti:
+    needs: win-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: result
+      - id: result
+        run: cat status.txt >> $GITHUB_OUTPUT
+
+      - if: ${{ steps.result.outputs.STATUS == 'success' }}
+        name: Build Success
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😚 **Success**
+            Platform: Windows
+            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+
+      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
+        name: Build Failure
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😱 **Failure**
+            Platform: Windows
+            [link](https://github.com/${{ github.repository }}/actions)
+
+  mac-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.14.2
+      - run: node index.js
+      - run: echo "STATUS=fail" > status.txt
+#      - run: echo "STATUS=success" > status.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: status.txt
+      - if: ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: status.txt
+
+  mac-noti:
+    needs: mac-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: result
+      - id: result
+        run: cat status.txt >> $GITHUB_OUTPUT
+
+      - if: ${{ steps.result.outputs.STATUS == 'success' }}
+        name: Build Success
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😚 **Success**
+            Platform: Mac
+            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+
+      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
+        name: Build Failure
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😱 **Failure**
+            Platform: Mac
+            [link](https://github.com/${{ github.repository }}/actions)
