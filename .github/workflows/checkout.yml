@@ -10,43 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - run: echo "STATUS=success" > fail.txt
-      - uses: actions/upload-artifact@v3
-        with:
-          name: result
-          path: fail.txt
-
-  download:
-    needs: upload
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: result
-      - id: result
-        run: cat fail.txt >> $GITHUB_OUTPUT
-
-      - if: ${{ steps.result.outputs.STATUS == 'success' }}
-        name: Build Success Message
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Author: ${{github.actor}}
-            Status: 😚 **Success**
-            Commit message: ${{ github.event.head_commit.message }}
-            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
-
-      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
-        name: Build Failure
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Author: ${{github.actor}}
-            Status: 😱 **Failure**
-            Commit message: ${{ github.event.head_commit.message }}
-            [link](https://github.com/${{ github.repository }}/actions)
-
+      - id: test
+        run: echo test >> $GITHUB_OUTPUT
+      - run: echo test2 >> $GITHUB_OUTPUT
+      - run: echo ${{ steps.test.outputs.STATUS }}
+      - run: echo ${{ steps.upload.outputs.STATUS }}
