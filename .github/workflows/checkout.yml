@@ -17,12 +17,12 @@ jobs:
       - run: echo "STATUS=success" > status.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: result_win
           path: status.txt
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: result_win
           path: status.txt
 
   win-noti:
@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: result
+          name: result_win
       - id: result
         run: cat status.txt >> $GITHUB_OUTPUT
 
@@ -71,12 +71,12 @@ jobs:
 #      - run: echo "STATUS=success" > status.txt
       - uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: result_mac
           path: status.txt
       - if: ${{ failure() }}
         uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: result_mac
           path: status.txt
 
   mac-noti:
@@ -85,7 +85,7 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: result
+          name: result_mac
       - id: result
         run: cat status.txt >> $GITHUB_OUTPUT
 
