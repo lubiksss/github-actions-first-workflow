@@ -41,3 +41,40 @@ jobs:
             Status: 😱 **Failure**
             Platform: Windows
             [link](https://github.com/${{ github.repository }}/actions)
+
+  mac-build:
+    runs-on: macos-latest
+    steps:
+      - run: exit 1
+
+  mac-noti-success:
+    if: ${{ always() && contains(needs.mac-build.result, 'success') }}
+    needs: mac-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Success
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😚 **Success**
+            Platform: Mac
+            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+
+  mac-noti-fail:
+    if: ${{ always() && contains(needs.mac-build.result, 'fail') }}
+    needs: mac-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Failure
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😱 **Failure**
+            Platform: Mac
+            [link](https://github.com/${{ github.repository }}/actions)
