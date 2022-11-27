@@ -32,7 +32,7 @@ jobs:
           name: result_win
       - id: result
         run: cat status.txt >> $GITHUB_OUTPUT
-
+      - run: ${{ steps.result.outputs.STATUS }}
       - if: ${{ steps.result.outputs.STATUS == 'success' }}
         name: Build Success
         uses: appleboy/telegram-action@master
@@ -80,9 +80,10 @@ jobs:
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: result_win
+          name: result_mac
       - id: result
         run: cat status.txt >> $GITHUB_OUTPUT
+      - run: ${{ steps.result.outputs.STATUS }}
 
       - if: ${{ steps.result.outputs.STATUS == 'success' }}
         name: Build Success
