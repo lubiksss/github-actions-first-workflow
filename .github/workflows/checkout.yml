@@ -41,7 +41,6 @@ jobs:
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
 
       - if: ${{ steps.result.outputs.STATUS == 'fail' }}
-        run: echo "fail"
       - name: Build Failure
         uses: appleboy/telegram-action@master
         if: failure()
