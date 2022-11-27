@@ -8,6 +8,7 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
+      - id: upload
       - uses: actions/checkout@v3
       - run: node index.js
       - run: echo "STATUS=fail" >> $GITHUB_OUTPUT
