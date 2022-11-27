@@ -30,11 +30,10 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: result_win
-      - id: result
+      - id: result-win
         run: cat status.txt > $GITHUB_OUTPUT
-      - run: echo ${{ steps.result.outputs.STATUS }}
-#      - if: ${{ steps.result.outputs.STATUS == 'success' }}
-      - if: ${{ 'success' == 'success' }}
+      - run: echo ${{ steps.result-win.outputs.STATUS }}
+      - if: ${{ steps.result-win.outputs.STATUS == 'success' }}
         name: Build Success
         uses: appleboy/telegram-action@master
         with:
@@ -46,7 +45,7 @@ jobs:
             Platform: Windows
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
 
-      - if: ${{ steps.result.outputs.STATUS != 'success' }}
+      - if: ${{ steps.result-win.outputs.STATUS != 'success' }}
         name: Build Failure
         uses: appleboy/telegram-action@master
         with:
@@ -81,11 +80,11 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: result_mac
-      - id: result
+      - id: result-mac
         run: cat status.txt > $GITHUB_OUTPUT
-      - run: echo ${{ steps.result.outputs.STATUS }}
+      - run: echo ${{ steps.result-mac.outputs.STATUS }}
 
-      - if: ${{ steps.result.outputs.STATUS == 'success' }}
+      - if: ${{ steps.result-mac.outputs.STATUS == 'success' }}
         name: Build Success
         uses: appleboy/telegram-action@master
         with:
@@ -97,7 +96,7 @@ jobs:
             Platform: Windows
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
 
-      - if: ${{ steps.result.outputs.STATUS != 'success' }}
+      - if: ${{ steps.result-mac.outputs.STATUS != 'success' }}
         name: Build Failure
         uses: appleboy/telegram-action@master
         with:
