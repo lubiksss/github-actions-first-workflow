@@ -26,29 +26,27 @@ jobs:
       - id: result
         run: cat fail.txt >> $GITHUB_OUTPUT
 
-#      - if: ${{ steps.result.outputs.STATUS == 'success' }}
-#      - name: Build Success Message
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          format: markdown
-#          message: |
-#            Author: ${{github.actor}}
-#            Status: 😚 **Success**
-#            Commit message: ${{ github.event.commits[0].message }}
-#            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
-#
-#      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
-#      - name: Build Failure
-#        uses: appleboy/telegram-action@master
-#        with:
-#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-#          token: ${{ secrets.TELEGRAM_TOKEN }}
-#          format: markdown
-#          message: |
-#            Author: ${{github.actor}}
-#            Status: 😱 **Failure**
-#            Commit message: ${{ github.event.commits[0].message }}
-#            [link](https://github.com/${{ github.repository }}/actions)
+      - if: ${{ steps.result.outputs.STATUS == 'success' }}
+        name: Build Success Message
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😚 **Success**
+            Commit message: ${{ github.event.commits[0].message }}
+            [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
+
+      - if: ${{ steps.result.outputs.STATUS == 'fail' }}
+        name: Build Failure
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Author: ${{github.actor}}
+            Status: 😱 **Failure**
+            Commit message: ${{ github.event.commits[0].message }}
+            [link](https://github.com/${{ github.repository }}/actions)
 
