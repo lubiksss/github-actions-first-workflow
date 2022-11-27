@@ -8,7 +8,7 @@ jobs:
   win-build:
     runs-on: windows-latest
     steps:
-      - run: exit 0
+      - run: exit 1
 
   win-noti-success:
     if: ${{ always() && contains(needs.win-build.result, 'success') }}
@@ -25,17 +25,6 @@ jobs:
             Status: 😚 **Success**
             Platform: Windows
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
-
-      - name: Build Failure
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_TO }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            Author: ${{github.actor}}
-            Status: 😱 **Failure**
-            Platform: Windows
-            [link](https://github.com/${{ github.repository }}/actions)
 
   win-noti-fail:
     if: ${{ always() && contains(needs.win-build.result, 'fail') }}
