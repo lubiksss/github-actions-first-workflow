@@ -10,8 +10,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - id: test
-        run: echo 'STATUS=test' >> $GITHUB_OUTPUT
-      - run: echo 'STATUS=test2' >> $GITHUB_OUTPUT
-      - run: echo ${{ steps.test.outputs.STATUS }}
-      - run: echo ${{ steps.upload.outputs.STATUS }}
+      - run: echo ${{github.refs/tags}}
