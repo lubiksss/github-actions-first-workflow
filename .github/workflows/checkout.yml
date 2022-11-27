@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - run: echo "STATUS=fail" > fail.txt
+      - run: echo "STATUS=success" > fail.txt
       - uses: actions/upload-artifact@v3
         with:
           name: result
@@ -35,7 +35,7 @@ jobs:
           message: |
             Author: ${{github.actor}}
             Status: 😚 **Success**
-            Commit message: ${{ github.event.commits[0].message }}
+            Commit message: ${{ github.event.head_commit.message }}
             [See changes](https://github.com/${{ github.repository }}/commit/${{github.sha}})
 
       - if: ${{ steps.result.outputs.STATUS == 'fail' }}
@@ -47,6 +47,6 @@ jobs:
           message: |
             Author: ${{github.actor}}
             Status: 😱 **Failure**
-            Commit message: ${{ github.event.commits[0].message }}
+            Commit message: ${{ github.event.head_commit.message }}
             [link](https://github.com/${{ github.repository }}/actions)
 
