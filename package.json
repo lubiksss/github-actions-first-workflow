@@ -1,6 +1,6 @@
 {
   "name": "github-actions-first-workflow",
-  "version": "2.0.23",
+  "version": "2.0.24",
   "description": "",
   "main": "index.js",
   "scripts": {
