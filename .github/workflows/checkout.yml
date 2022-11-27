@@ -13,8 +13,8 @@ jobs:
         with:
           node-version: 16.14.2
       - run: node index.js
-#      - run: echo "STATUS=fail" > status.txt
-      - run: echo "STATUS=success" > status.txt
+      - run: echo "STATUS=fail" > status.txt
+#      - run: echo "STATUS=success" > status.txt
       - uses: actions/upload-artifact@v3
         with:
           name: result_win
