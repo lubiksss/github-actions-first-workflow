@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: node index.js
-      - run: echo fail > fail.txt
+      - run: echo "STATUS=fail" > fail.txt
       - uses: actions/upload-artifact@v3
         with:
           name: result
@@ -23,7 +23,9 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: result
-      - run: cat fail.txt
+      - run: cat fail.txt >> $GITHUB_OUTPUT
+      - if: ${{ steps.download.outputs.STATUS == 'fail' }}
+        run: echo "fail"
 
 #      - name: Build Success Message
 #        uses: appleboy/telegram-action@master
