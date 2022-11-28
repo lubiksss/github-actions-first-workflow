@@ -1,23 +1,19 @@
 name: Our Workflow
 on: push
 jobs:
-  macos:
-    runs-on: macos-10.15
+  win:
+    runs-on: windows-latest
     steps:
-      - id: continue
-#        continue-on-error: true
-        run: exit 1
-      - run: echo hello world
-
-  success:
-    needs: macos
-    if: ${{ always() && contains(needs.macos.result, 'success') }}
-    runs-on: ubuntu-latest
+      - run: echo win > test.txt
+      - uses: softprops/action-gh-release@v1
+        with:
+          name: ${{github.ref_name}}_win64
+          files: 'test.txt'
+  mac:
+    runs-on: macos-latest
     steps:
-      - run: echo success
-  failure:
-    needs: macos
-    if: ${{ always() && contains(needs.macos.result, 'fail') }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo fail
+      - run: echo win > test.txt
+      - uses: softprops/action-gh-release@v1
+        with:
+          name: ${{github.ref_name}}_mac64
+          files: 'test.txt'
