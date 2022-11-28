@@ -8,7 +8,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: release
-          path: win.txt
+          path: '*.txt'
   mac:
     runs-on: macos-latest
     steps:
