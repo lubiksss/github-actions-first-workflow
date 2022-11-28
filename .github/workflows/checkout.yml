@@ -1,7 +1,6 @@
 name: Our Workflow
 on:
-  push:
-    tags
+  push: tags
 jobs:
   win:
     runs-on: windows-latest
