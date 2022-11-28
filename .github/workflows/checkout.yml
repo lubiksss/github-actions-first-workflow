@@ -4,11 +4,11 @@ jobs:
   win:
     runs-on: windows-latest
     steps:
-      - run: echo win > win.txt
+      - run: echo win > ./dist/win.txt
       - uses: actions/upload-artifact@v3
         with:
           name: release
-          path: '*.txt'
+          path: './dist/*.txt'
   mac:
     runs-on: macos-latest
     steps:
@@ -26,7 +26,5 @@ jobs:
           name: release
       - uses: softprops/action-gh-release@v1
         with:
-          files: |
-            mac.txt
-            win.txt
+          files: '*'
 
