@@ -2,7 +2,7 @@ name: Our Workflow
 on: push
 jobs:
   macos:
-    runs-on: macos-latest
+    runs-on: macos-10.15
     steps:
       - id: continue
 #        continue-on-error: true
