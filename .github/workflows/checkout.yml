@@ -8,7 +8,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: release
-          path: test.txt
+          path: win.txt
   mac:
     runs-on: macos-latest
     steps:
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: release
-          path: test.txt
+          path: mac.txt
   release:
     needs: [win, mac]
     runs-on: ubuntu-latest
