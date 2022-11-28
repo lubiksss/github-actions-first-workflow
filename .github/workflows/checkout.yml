@@ -4,5 +4,20 @@ jobs:
   macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: npm install
+      - id: continue
+        continue-on-error: true
+        run: exit 1
+      - run: echo hello world
+
+  success:
+    needs: macos
+    if: ${{ always() && contains(needs.macos.result, 'success') }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo success
+  failure:
+    needs: macos
+    if: ${{ always() && contains(needs.macos.result, 'fail') }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo fail
