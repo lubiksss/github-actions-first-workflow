@@ -7,7 +7,7 @@ jobs:
       - run: echo win > test.txt
       - uses: softprops/action-gh-release@v1
         with:
-          name: ${{github.ref_name}}_win64
+          name: test_win64
           files: 'test.txt'
   mac:
     runs-on: macos-latest
@@ -15,5 +15,5 @@ jobs:
       - run: echo win > test.txt
       - uses: softprops/action-gh-release@v1
         with:
-          name: ${{github.ref_name}}_mac64
+          name: test_mac64
           files: 'test.txt'
