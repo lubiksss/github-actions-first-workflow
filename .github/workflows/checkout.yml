@@ -4,16 +4,28 @@ jobs:
   win:
     runs-on: windows-latest
     steps:
-      - run: echo win > test.txt
-      - uses: softprops/action-gh-release@v1
+      - run: echo win > win.txt
+      - uses: actions/upload-artifact@v3
         with:
-          name: test_win64
-          files: 'test.txt'
+          name: release
+          path: test.txt
   mac:
     runs-on: macos-latest
     steps:
-      - run: echo win > test.txt
+      - run: echo mac > mac.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: test.txt
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: release
       - uses: softprops/action-gh-release@v1
         with:
-          name: test_mac64
-          files: 'test.txt'
+          files: |
+            mac.txt
+            win.txt
+
