@@ -1,9 +1,12 @@
 name: Our Workflow
-on: push
+on:
+  push:
+    tags
 jobs:
   win:
     runs-on: windows-latest
     steps:
+      - run: mkdir dist
       - run: echo win > ./dist/win.txt
       - uses: actions/upload-artifact@v3
         with:
