@@ -4,9 +4,5 @@ jobs:
   win:
     runs-on: windows-latest
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 14
-      - run : node -v
-      - run : npm -v
+      - run: echo ${{github.ref_name}}
 
