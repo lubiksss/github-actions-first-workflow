@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          repository: 'https://github.com/lubiksss/KPT0-crawling-templ.git'
+          repository: 'lubiksss/KPT0-crawling-templ'
       - run: echo ${{github.ref_name}}
       - run: ls -al
 
