@@ -1,8 +1,12 @@
 name: Our Workflow
 on: push
 jobs:
-  win:
+  test:
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          repository: 'https://github.com/lubiksss/KPT0-crawling-templ.git'
       - run: echo ${{github.ref_name}}
+      - run: ls -al
 
