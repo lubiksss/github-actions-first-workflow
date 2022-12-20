@@ -4,7 +4,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: nick-field/retry@v2
+      - uses: nick-fields/retry@v2
         with:
           timeout_seconds: 5
           max_attempts: 3
