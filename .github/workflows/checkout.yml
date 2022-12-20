@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: nick-fields/retry@v2
         with:
-          continue-on-error: true
+          continue_on_error: true
           timeout_seconds: 5
           max_attempts: 3
           command: |
