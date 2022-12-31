@@ -1,17 +1,23 @@
-name: Our Workflow
+name: test
 on: push
 jobs:
-  test:
+  generate:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.step1.outputs.matrix }}
+    steps:
+      - id: step1
+      - run: echo "matrix=[1,2,3]" >> $GITHUB_OUTPUT
+  echo:
+    needs: generate
     runs-on: ubuntu-latest
     steps:
-      - uses: nick-fields/retry@v2
-        with:
-          continue_on_error: true
-          timeout_seconds: 5
-          max_attempts: 3
-          command: |
-            sleep 10
-            echo "Hello World"
-      - run: echo ${{github.ref_name}}
-      - run: ls -al
-
+      - run: echo ${{ needs.generate.outputs.matrix }}
+  runs:
+    needs: generate
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        keys: [1, 2, 3]
+    steps:
+        - run: echo ${{ matrix.keys }}
