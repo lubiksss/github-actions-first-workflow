@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        keys: ${{fromJSON(needs.generate.outputs.matrix)}}
+        keys: ${{needs.generate.outputs.matrix}}
     steps:
       - run: echo ${{ matrix.keys }}
