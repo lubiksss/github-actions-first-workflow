@@ -7,7 +7,7 @@ jobs:
       matrix: ${{ steps.step1.outputs.matrix }}
     steps:
       - id: step1
-      - run: echo "matrix=[1,2,3]" >> $GITHUB_OUTPUT
+        run: echo "matrix=[1,2,3]" >> $GITHUB_OUTPUT
   echo:
     needs: generate
     runs-on: ubuntu-latest
